@@ -21,7 +21,7 @@ export default function Hero({ title, subtitle, ctaText, ctaLink, imageSrc }: He
             href="#"
             className="inline-block rounded-md bg-white px-6 py-3 text-lg font-medium text-blue-700 transition hover:bg-blue-50"
           >
-            fine the best deals now
+            fined the best deals now
           </Link>
         </div>
         <div className="mt-12 md:mt-0 md:w-1/2">
