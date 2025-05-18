@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TamShopEx - Modern eCommerce Platform
+
+![TamShopEx Logo](https://placeholder.com/logo)
+
+## Overview
+
+TamShopEx is a streamlined, modern eCommerce platform built with Next.js, TypeScript, and PostgreSQL. This project offers core online shopping functionality with a clean, responsive interface designed for quick deployment and scalability.
+
+## Features
+
+- **Product Browsing** - Browse products by category with an intuitive navigation system
+- **Product Search** - Find products quickly with our responsive search functionality
+- **Shopping Cart** - Add, modify, and remove items with cart persistence
+- **Checkout Process** - Streamlined ordering with shipping information collection
+- **Responsive Design** - Optimized for all devices from mobile to desktop
+
+## Tech Stack
+
+- **Frontend**: Next.js with TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **State Management**: React Context API
+- **Styling**: CSS Modules / Tailwind CSS
+- **Deployment**: Vercel
+
+## Project Structure
+
+```
+tamshopex/
+├── components/          # Reusable UI components
+│   ├── cart/            # Cart-related components
+│   ├── layout/          # Layout components (header, footer)
+│   ├── product/         # Product display components
+│   └── ui/              # Generic UI elements
+├── pages/               # Next.js pages
+│   ├── api/             # API routes
+│   ├── category/        # Category pages
+│   ├── checkout/        # Checkout flow pages
+│   └── product/         # Product detail pages
+├── prisma/              # Database schema and migrations
+├── public/              # Static assets
+├── styles/              # Global styles
+├── lib/                 # Utility functions and helpers
+├── contexts/            # React context providers
+└── types/               # TypeScript type definitions
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v16+)
+- PostgreSQL database
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/tamshopex.git
+   cd tamshopex
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Configure environment variables:
+   Create a `.env.local` file in the root directory:
+   ```
+   DATABASE_URL="postgresql://username:password@localhost:5432/tamshopex"
+   NEXT_PUBLIC_API_URL="http://localhost:3000/api"
+   ```
+
+4. Set up the database:
+   ```bash
+   npx prisma migrate dev --name init
+   npx prisma db seed
+   ```
+
+5. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Development Timeline
+
+This project was developed in a 3-day sprint following this timeline:
+
+### Day 1: Project Setup & Core Structure
+- Initialize Next.js project with TypeScript
+- Set up PostgreSQL database and Prisma
+- Create basic data models
+- Implement basic page routing
+
+### Day 2: Product Management & Shopping Cart
+- Build home page with product listings
+- Implement category navigation
+- Create product search functionality
+- Develop shopping cart system
+
+### Day 3: Checkout & Final Integration
+- Build checkout form
+- Connect all components
+- Basic styling and responsiveness
+- Testing and deployment
+
+## Data Models
+
+### Core Entities
+- **Product**: id, name, description, price, imageUrl, categoryId
+- **Category**: id, name
+- **Cart**: id, items
+- **Order**: id, customerDetails, items, total
+
+## API Endpoints
+
+| Endpoint                  | Method | Description                        |
+|---------------------------|--------|------------------------------------|
+| `/api/products`           | GET    | Get all products                   |
+| `/api/products/:id`       | GET    | Get a specific product             |
+| `/api/categories`         | GET    | Get all categories                 |
+| `/api/search?q=query`     | GET    | Search products                    |
+| `/api/cart`               | GET    | Get cart items                     |
+| `/api/cart`               | POST   | Add item to cart                   |
+| `/api/cart/:itemId`       | PUT    | Update cart item                   |
+| `/api/cart/:itemId`       | DELETE | Remove item from cart              |
+| `/api/orders`             | POST   | Create a new order                 |
+
+## Deployment
+
+This project is configured for deployment on Vercel with a PostgreSQL database hosted on Railway or Supabase.
 
 ```bash
-npm run dev
+# Build the project
+npm run build
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn build
+
+# Deploy to Vercel
+vercel --prod
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Future Enhancements
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- User authentication and account management
+- Payment gateway integration
+- Admin dashboard for product management
+- Order tracking and history
+- Discount and promotion system
+- User reviews and ratings
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For questions or support, please contact [akio216216@gmail.com](mailto:akio216216@gmail.com).
