@@ -14,8 +14,8 @@ interface Product {
   stock: number;
   categoryId: string;
   category: {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
   };
   createdAt: string;
   updatedAt: string;
@@ -94,10 +94,10 @@ export default function ProductGrid() {
       case 'price-desc':
         return b.price - a.price;
       case 'newest':
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
       default:
-        // Featured - could be based on some other criteria, using updatedAt for now
-        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+        // Featured - could be based on some other criteria,
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
     }
   });
 
