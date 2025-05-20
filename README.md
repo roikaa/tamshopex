@@ -26,22 +26,22 @@ TamShopEx is a streamlined, modern eCommerce platform built with Next.js, TypeSc
 
 ```
 tamshopex/
-├── components/          # Reusable UI components
-│   ├── cart/            # Cart-related components
-│   ├── layout/          # Layout components (header, footer)
-│   ├── product/         # Product display components
-│   └── ui/              # Generic UI elements
-├── pages/               # Next.js pages
-│   ├── api/             # API routes
-│   ├── category/        # Category pages
-│   ├── checkout/        # Checkout flow pages
-│   └── product/         # Product detail pages
-├── prisma/              # Database schema and migrations
-├── public/              # Static assets
-├── styles/              # Global styles
-├── lib/                 # Utility functions and helpers
-├── contexts/            # React context providers
-└── types/               # TypeScript type definitions
+├── app                          # Next.js 13+ App Router - main application pages
+│   ├── cart                     # Shopping cart page (/cart)
+│   ├── products                 # Products listing page (/products)
+│   │   └── [id]                 # Dynamic product detail pages (/products/123)
+│   ├── signin                   # User authentication - sign in page (/signin)
+│   └── signup                   # User registration page (/signup)
+├── components                   # Reusable React components
+│   ├── home                     # Homepage-specific components (hero, featured products)
+│   ├── layout                   # Layout components (header, footer, navigation)
+│   └── products                 # Product-related components (cards, search, filters)
+├── data                         # Static data files and seed data for database
+├── lib                          # Utility functions and configurations
+├── pages                        # Legacy Pages Router (used for API routes)
+│   └── api                      # API endpoints for backend functionality
+├── prisma                       # Database schema and migrations
+└── public                       # Static assets (images, icons, logos)
 ```
 
 ## Getting Started

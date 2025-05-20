@@ -5,6 +5,9 @@ pkgs.mkShell {
     pkgs.prisma
     pkgs.mermaid-cli
     pkgs.nmh
+    pkgs.tree
+    pkgs.zsh
+
   ];
 
   shellHook = ''
