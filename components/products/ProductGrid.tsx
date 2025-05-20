@@ -192,7 +192,7 @@ export default function ProductGrid() {
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-gray-900">{product.name}</h3>
-                <p className="text-blue-600 mt-1">${product.price}</p>
+                <p className="text-blue-600 mt-1">{product.price} DA</p>
                 {product.stock === 0 && (
                   <p className="text-red-500 text-sm mt-1">Out of stock</p>
                 )}

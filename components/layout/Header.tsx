@@ -93,7 +93,8 @@ export default function Header() {
             </div>
 
             {/* User */}
-            <Link href="/account" className="text-gray-500 hover:text-blue-600">
+            
+            <Link href="/signin" className="text-gray-500 hover:text-blue-600">
               <User size={20} />
             </Link>
 

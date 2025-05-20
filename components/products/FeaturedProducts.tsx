@@ -1,13 +1,34 @@
-// components/FeaturedProducts.js
+// components/products/FeaturedProducts.tsx
 "use client"
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const FeaturedProducts = ({ limit = 6 }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+interface Product {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  imageUrl?: string;
+  stock: number;
+  createdAt: string;
+  category: {
+    name: string;
+  };
+}
+
+interface FeaturedProductsProps {
+  limit?: number;
+}
+
+interface ProductCardProps {
+  product: Product;
+}
+
+const FeaturedProducts = ({ limit = 6 }: FeaturedProductsProps) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
@@ -19,7 +40,7 @@ const FeaturedProducts = ({ limit = 6 }) => {
           throw new Error('Failed to fetch products');
         }
         
-        const allProducts = await response.json();
+        const allProducts: Product[] = await response.json();
         
         // Get the most recent products as "featured" (you can change this logic)
         const featuredProducts = allProducts
@@ -28,7 +49,7 @@ const FeaturedProducts = ({ limit = 6 }) => {
         
         setProducts(featuredProducts);
       } catch (err) {
-        setError(err.message);
+        setError(err instanceof Error ? err.message : 'An unknown error occurred');
         console.error('Error fetching featured products:', err);
       } finally {
         setLoading(false);
@@ -118,12 +139,11 @@ const FeaturedProducts = ({ limit = 6 }) => {
   );
 };
 
-const ProductCard = ({ product }) => {
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
+const ProductCard = ({ product }: ProductCardProps) => {
+  const formatPrice = (price: number): string => {
+    // Format the number with commas and add DA suffix
+    const formattedNumber = new Intl.NumberFormat('en-US').format(price);
+    return `${formattedNumber} DA`;
   };
 
   return (
