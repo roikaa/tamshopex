@@ -41,6 +41,7 @@ model Product {
   price       Decimal     @db.Decimal(10, 2)
   imageUrl    String?
   stock       Int         @default(0)
+  featured    Boolean     @default(false) // Add this line
   categoryId  String
   category    Category    @relation(fields: [categoryId], references: [id])
   orderItems  OrderItem[]
@@ -48,6 +49,7 @@ model Product {
   updatedAt   DateTime    @updatedAt
 
   @@index([categoryId])
+  @@index([featured]) // Add this index for better performance
 }
 
 model Order {

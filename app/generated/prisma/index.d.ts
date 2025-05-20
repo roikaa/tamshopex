@@ -3291,6 +3291,7 @@ export namespace Prisma {
     price: Decimal | null
     imageUrl: string | null
     stock: number | null
+    featured: boolean | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3303,6 +3304,7 @@ export namespace Prisma {
     price: Decimal | null
     imageUrl: string | null
     stock: number | null
+    featured: boolean | null
     categoryId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3315,6 +3317,7 @@ export namespace Prisma {
     price: number
     imageUrl: number
     stock: number
+    featured: number
     categoryId: number
     createdAt: number
     updatedAt: number
@@ -3339,6 +3342,7 @@ export namespace Prisma {
     price?: true
     imageUrl?: true
     stock?: true
+    featured?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -3351,6 +3355,7 @@ export namespace Prisma {
     price?: true
     imageUrl?: true
     stock?: true
+    featured?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -3363,6 +3368,7 @@ export namespace Prisma {
     price?: true
     imageUrl?: true
     stock?: true
+    featured?: true
     categoryId?: true
     createdAt?: true
     updatedAt?: true
@@ -3462,6 +3468,7 @@ export namespace Prisma {
     price: Decimal
     imageUrl: string | null
     stock: number
+    featured: boolean
     categoryId: string
     createdAt: Date
     updatedAt: Date
@@ -3493,6 +3500,7 @@ export namespace Prisma {
     price?: boolean
     imageUrl?: boolean
     stock?: boolean
+    featured?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3508,6 +3516,7 @@ export namespace Prisma {
     price?: boolean
     imageUrl?: boolean
     stock?: boolean
+    featured?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3521,6 +3530,7 @@ export namespace Prisma {
     price?: boolean
     imageUrl?: boolean
     stock?: boolean
+    featured?: boolean
     categoryId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -3548,6 +3558,7 @@ export namespace Prisma {
       price: Prisma.Decimal
       imageUrl: string | null
       stock: number
+      featured: boolean
       categoryId: string
       createdAt: Date
       updatedAt: Date
@@ -3952,6 +3963,7 @@ export namespace Prisma {
     readonly price: FieldRef<"Product", 'Decimal'>
     readonly imageUrl: FieldRef<"Product", 'String'>
     readonly stock: FieldRef<"Product", 'Int'>
+    readonly featured: FieldRef<"Product", 'Boolean'>
     readonly categoryId: FieldRef<"Product", 'String'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
@@ -6385,6 +6397,7 @@ export namespace Prisma {
     price: 'price',
     imageUrl: 'imageUrl',
     stock: 'stock',
+    featured: 'featured',
     categoryId: 'categoryId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -6515,6 +6528,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -6679,6 +6699,7 @@ export namespace Prisma {
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     stock?: IntFilter<"Product"> | number
+    featured?: BoolFilter<"Product"> | boolean
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
@@ -6693,6 +6714,7 @@ export namespace Prisma {
     price?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     stock?: SortOrder
+    featured?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6710,6 +6732,7 @@ export namespace Prisma {
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     stock?: IntFilter<"Product"> | number
+    featured?: BoolFilter<"Product"> | boolean
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
@@ -6724,6 +6747,7 @@ export namespace Prisma {
     price?: SortOrder
     imageUrl?: SortOrderInput | SortOrder
     stock?: SortOrder
+    featured?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -6744,6 +6768,7 @@ export namespace Prisma {
     price?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableWithAggregatesFilter<"Product"> | string | null
     stock?: IntWithAggregatesFilter<"Product"> | number
+    featured?: BoolWithAggregatesFilter<"Product"> | boolean
     categoryId?: StringWithAggregatesFilter<"Product"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -7030,6 +7055,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
@@ -7043,6 +7069,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7056,6 +7083,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -7069,6 +7097,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7082,6 +7111,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7094,6 +7124,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7105,6 +7136,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7460,6 +7492,11 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type CategoryRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
@@ -7482,6 +7519,7 @@ export namespace Prisma {
     price?: SortOrder
     imageUrl?: SortOrder
     stock?: SortOrder
+    featured?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7499,6 +7537,7 @@ export namespace Prisma {
     price?: SortOrder
     imageUrl?: SortOrder
     stock?: SortOrder
+    featured?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7511,6 +7550,7 @@ export namespace Prisma {
     price?: SortOrder
     imageUrl?: SortOrder
     stock?: SortOrder
+    featured?: SortOrder
     categoryId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7551,6 +7591,14 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumOrderStatusFilter<$PrismaModel = never> = {
@@ -7797,6 +7845,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type CategoryUpdateOneRequiredWithoutProductsNestedInput = {
@@ -8062,6 +8114,11 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -8103,6 +8160,14 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
@@ -8194,6 +8259,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemCreateNestedManyWithoutProductInput
@@ -8206,6 +8272,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutProductInput
@@ -8247,6 +8314,7 @@ export namespace Prisma {
     price?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     imageUrl?: StringNullableFilter<"Product"> | string | null
     stock?: IntFilter<"Product"> | number
+    featured?: BoolFilter<"Product"> | boolean
     categoryId?: StringFilter<"Product"> | string
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
@@ -8483,6 +8551,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutProductsInput
@@ -8495,6 +8564,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     categoryId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -8558,6 +8628,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutProductsNestedInput
@@ -8570,6 +8641,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     categoryId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8628,6 +8700,7 @@ export namespace Prisma {
     price: Decimal | DecimalJsLike | number | string
     imageUrl?: string | null
     stock?: number
+    featured?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8639,6 +8712,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUpdateManyWithoutProductNestedInput
@@ -8651,6 +8725,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orderItems?: OrderItemUncheckedUpdateManyWithoutProductNestedInput
@@ -8663,6 +8738,7 @@ export namespace Prisma {
     price?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
+    featured?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

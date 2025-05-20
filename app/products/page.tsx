@@ -1,4 +1,5 @@
 // app/products/page.tsx
+
 "use client";
 import ProductGrid from '@/components/products/ProductGrid';
 import ProductFilters from '@/components/products/ProductFilters';

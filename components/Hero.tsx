@@ -27,7 +27,7 @@ export default function Hero({ title, subtitle, ctaText, ctaLink, imageSrc }: He
         <div className="mt-12 md:mt-0 md:w-1/2">
           <div className="relative h-64 w-full overflow-hidden rounded-lg md:h-96">
             <Image
-              src="/hero-smart-watch.png"
+              src="/hero.jpeg"
               alt="Hero image"
               fill
               className="object-cover"

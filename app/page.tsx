@@ -1,8 +1,8 @@
 // app/page.tsx
 import Link from 'next/link';
-//import FeaturedProducts from '@/components/products/FeaturedProducts';
+import FeaturedProducts from '@/components/products/FeaturedProducts';
 import Hero from '@/components/Hero';
-//import CategoryHighlights from '@/components/home/CategoryHighlights';
+import CategoriesSection from '@/components/home/CategoriesSection';
 
 export default function Home() {
   return (
@@ -11,12 +11,11 @@ export default function Home() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8">Featured Products</h2>
-          "FeaturedProducts component here"
+      <FeaturedProducts limit={6} />
         </section>
         
         <section className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Shop by Category</h2>
-          CategoryHighlights component here
+         < CategoriesSection/> 
         </section>
         
         <section className="bg-gray-50 p-8 rounded-lg">
