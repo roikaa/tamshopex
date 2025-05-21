@@ -7,7 +7,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Your E-commerce Store',
+  title: 'TamShopex',
   description: 'Shop the latest products at our online store',
 };
 

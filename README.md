@@ -17,7 +17,7 @@ TamShopEx is a streamlined, modern eCommerce platform built with Next.js, TypeSc
 ## Tech Stack
 
 - **Frontend**: Next.js with TypeScript
-- **Database**: PostgreSQL with Prisma ORM
+- **Database**: Prisma Postgres with Prisma ORM
 - **State Management**: React Context API
 - **Styling**: CSS Modules / Tailwind CSS
 - **Deployment**: Vercel

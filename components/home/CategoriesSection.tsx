@@ -3,6 +3,9 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+
+
 
 const CategoriesSection = () => {
   const [categories, setCategories] = useState([]);
@@ -112,25 +115,14 @@ const CategoryCard = ({ category }) => {
     <Link href={`/category/${category.id}`} className="group block">
       <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 group-hover:border-gray-200">
         {/* Category Image/Icon Placeholder */}
-        <div className="h-48 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden">
-          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-              <svg 
-                className="w-8 h-8 text-gray-600" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" 
-                />
-              </svg>
-            </div>
-          </div>
+
+        <div className="h-70 bg-gradient-to-br from-blue-100 to-purple-100 relative overflow-hidden">
+         <Image 
+                    src={category.imageUrl} 
+                    alt={category.name}
+                      width={300} 
+                    height={300}/> 
+                 
         </div>
 
         {/* Category Info */}

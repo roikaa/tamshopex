@@ -1,9 +1,11 @@
 // components/layout/Header.tsx
+// components/layout/Header.tsx
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, User, Search, Menu, X } from 'lucide-react';
+import { useCart } from '../../app/hooks/useCart';
 
 const categories = [
   { name: 'Electronics', href: '/products?category=electronics' },
@@ -16,6 +18,10 @@ const categories = [
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
+  // Replace this with your actual auth state
+  const user = null; // Set this to your actual user object when logged in
+  const { cartCount } = useCart(user?.id);
 
   return (
     <header className="bg-white shadow-sm">
@@ -93,7 +99,6 @@ export default function Header() {
             </div>
 
             {/* User */}
-            
             <Link href="/signin" className="text-gray-500 hover:text-blue-600">
               <User size={20} />
             </Link>
@@ -101,9 +106,11 @@ export default function Header() {
             {/* Cart */}
             <Link href="/cart" className="text-gray-500 hover:text-blue-600 relative">
               <ShoppingCart size={20} />
-              <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             {/* Mobile menu button */}
@@ -209,7 +216,7 @@ export default function Header() {
                   className="text-gray-700 hover:text-blue-600"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  Cart (0)
+                  Cart ({cartCount})
                 </Link>
               </div>
             </div>
