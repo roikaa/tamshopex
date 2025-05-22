@@ -10,7 +10,8 @@ pkgs.mkShell {
     pkgs.tikzit         # Graphical tool for rapidly creating graphs and diagrams using PGF/TikZ
     pkgs.texliveFull    # latex
     pkgs.texlive.combined.scheme-full
-
+    pkgs.cope
+    pkgs.python311Packages.pip
 
   ];
 

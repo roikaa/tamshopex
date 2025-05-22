@@ -42,7 +42,7 @@ TamShopEx  is an eCommerce store developed using Next.js with Prisma PostgreSQL.
 
 1. **Clone the repository**
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/roikaa/tamshopex.git
    cd tamshopex
    ```
 
