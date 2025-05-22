@@ -1,4 +1,5 @@
 // components/products/FeaturedProducts.tsx
+// components/products/FeaturedProducts.tsx
 "use client"
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -13,8 +14,22 @@ interface Product {
   stock: number;
   createdAt: string;
   category: {
+    id: string;
     name: string;
   };
+}
+
+interface ApiResponse {
+  products: Product[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+  };
+  total: number;
 }
 
 interface FeaturedProductsProps {
@@ -34,22 +49,27 @@ const FeaturedProducts = ({ limit = 6 }: FeaturedProductsProps) => {
     const fetchFeaturedProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/products');
+        setError(null);
+        
+        // Fetch products with limit and sort by newest
+        const response = await fetch(`/api/products?limit=${limit}&sortBy=newest`);
         
         if (!response.ok) {
-          throw new Error('Failed to fetch products');
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
         }
         
-        const allProducts: Product[] = await response.json();
+        const data: ApiResponse = await response.json();
         
-        // Get the most recent products as "featured" (you can change this logic)
-        const featuredProducts = allProducts
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, limit);
-        
-        setProducts(featuredProducts);
+        // The API now returns { products: [...], pagination: {...} }
+        if (data.products && Array.isArray(data.products)) {
+          setProducts(data.products);
+        } else {
+          throw new Error('Invalid response format');
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+        setError(errorMessage);
         console.error('Error fetching featured products:', err);
       } finally {
         setLoading(false);
@@ -67,7 +87,7 @@ const FeaturedProducts = ({ limit = 6 }: FeaturedProductsProps) => {
             Featured Products
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(limit)].map((_, i) => (
               <div key={i} className="bg-white rounded-lg shadow-md overflow-hidden animate-pulse">
                 <div className="h-48 bg-gray-300"></div>
                 <div className="p-4">
@@ -91,7 +111,15 @@ const FeaturedProducts = ({ limit = 6 }: FeaturedProductsProps) => {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Featured Products
             </h2>
-            <p className="text-red-600">Error loading products: {error}</p>
+            <div className="bg-red-50 border border-red-200 rounded-md p-4">
+              <p className="text-red-600">Error loading products: {error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Try Again
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -1,165 +1,128 @@
-# TamShopEx - Modern eCommerce Platform
+# TamShopEx
 
-![TamShopEx Logo](https://placeholder.com/logo)
+> E-commerce Web Platform for Cultural Products from Tamanrasset, Algeria
 
-## Overview
+## 🌟 Overview
 
-TamShopEx is a streamlined, modern eCommerce platform built with Next.js, TypeScript, and PostgreSQL. This project offers core online shopping functionality with a clean, responsive interface designed for quick deployment and scalability.
+TamShopEx is a specialized e-commerce platform designed to showcase and sell local cultural and handcrafted products from Tamanrasset, connecting local artisans with tourists and cultural enthusiasts worldwide.
 
-## Features
+## 🎯 Mission
 
-- **Product Browsing** - Browse products by category with an intuitive navigation system
-- **Product Search** - Find products quickly with our responsive search functionality
-- **Shopping Cart** - Add, modify, and remove items with cart persistence
-- **Checkout Process** - Streamlined ordering with shipping information collection
-- **Responsive Design** - Optimized for all devices from mobile to desktop
+**Preserving Culture Through Digital Commerce** - Supporting local artisans while promoting Tamanrasset's rich cultural heritage through modern e-commerce technology.
 
-## Tech Stack
+## ✨ Key Features
 
-- **Frontend**: Next.js with TypeScript
-- **Database**: Prisma Postgres with Prisma ORM
-- **State Management**: React Context API
-- **Styling**: CSS Modules / Tailwind CSS
-- **Deployment**: Vercel
+- **Cultural Product Showcase** - Traditional jewelry, crafts, and heritage items
+- **Smart Search & Filtering** - Category-based navigation and advanced search
+- **Shopping Cart & Checkout** - Seamless shopping experience
+- **User Authentication** - Secure login/registration with role-based access
+- **Admin Dashboard** - Product and order management for administrators
+- **Responsive Design** - Mobile-first, accessible across all devices
+- **Multi-language Support** - Designed for diverse audiences
 
-## Project Structure
+## 🛠️ Tech Stack
 
-```
-tamshopex/
-├── app                          # Next.js 13+ App Router - main application pages
-│   ├── cart                     # Shopping cart page (/cart)
-│   ├── products                 # Products listing page (/products)
-│   │   └── [id]                 # Dynamic product detail pages (/products/123)
-│   ├── signin                   # User authentication - sign in page (/signin)
-│   └── signup                   # User registration page (/signup)
-├── components                   # Reusable React components
-│   ├── home                     # Homepage-specific components (hero, featured products)
-│   ├── layout                   # Layout components (header, footer, navigation)
-│   └── products                 # Product-related components (cards, search, filters)
-├── data                         # Static data files and seed data for database
-├── lib                          # Utility functions and configurations
-├── pages                        # Legacy Pages Router (used for API routes)
-│   └── api                      # API endpoints for backend functionality
-├── prisma                       # Database schema and migrations
-└── public                       # Static assets (images, icons, logos)
-```
+### Frontend
+- **Next.js 15+** - React-based full-stack framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Modern, responsive styling
+- **React Components** - Modular, reusable UI components
 
-## Getting Started
+### Backend
+- **Next.js API Routes** - Server-side logic and RESTful endpoints
+- **NextAuth.js** - Comprehensive authentication system
+- **JWT Tokens** - Secure, stateless authentication
 
-### Prerequisites
+### Database
+- **PostgreSQL** - Robust relational database
+- **Prisma ORM** - Type-safe database operations and schema management
 
-- Node.js (v16+)
-- PostgreSQL database
-- npm or yarn
+## 🚀 Getting Started
 
-### Installation
-
-1. Clone the repository:
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/tamshopex.git
+   git clone [repository-url]
    cd tamshopex
    ```
 
-2. Install dependencies:
+2. **Install dependencies**
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. Configure environment variables:
-   Create a `.env.local` file in the root directory:
-   ```
-   DATABASE_URL="postgresql://username:password@localhost:5432/tamshopex"
-   NEXT_PUBLIC_API_URL="http://localhost:3000/api"
-   ```
-
-4. Set up the database:
+3. **Set up environment variables**
    ```bash
-   npx prisma migrate dev --name init
-   npx prisma db seed
+   cp .env.example .env.local
+   # Configure database URL, NextAuth secret, etc.
    ```
 
-5. Start the development server:
+4. **Set up database**
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+
+5. **Run development server**
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+6. **Open** [http://localhost:3000](http://localhost:3000)
 
-## Development Timeline
+## 📁 Project Structure
 
-This project was developed in a 3-day sprint following this timeline:
-
-### Day 1: Project Setup & Core Structure
-- Initialize Next.js project with TypeScript
-- Set up PostgreSQL database and Prisma
-- Create basic data models
-- Implement basic page routing
-
-### Day 2: Product Management & Shopping Cart
-- Build home page with product listings
-- Implement category navigation
-- Create product search functionality
-- Develop shopping cart system
-
-### Day 3: Checkout & Final Integration
-- Build checkout form
-- Connect all components
-- Basic styling and responsiveness
-- Testing and deployment
-
-## Data Models
-
-### Core Entities
-- **Product**: id, name, description, price, imageUrl, categoryId
-- **Category**: id, name
-- **Cart**: id, items
-- **Order**: id, customerDetails, items, total
-
-## API Endpoints
-
-| Endpoint                  | Method | Description                        |
-|---------------------------|--------|------------------------------------|
-| `/api/products`           | GET    | Get all products                   |
-| `/api/products/:id`       | GET    | Get a specific product             |
-| `/api/categories`         | GET    | Get all categories                 |
-| `/api/search?q=query`     | GET    | Search products                    |
-| `/api/cart`               | GET    | Get cart items                     |
-| `/api/cart`               | POST   | Add item to cart                   |
-| `/api/cart/:itemId`       | PUT    | Update cart item                   |
-| `/api/cart/:itemId`       | DELETE | Remove item from cart              |
-| `/api/orders`             | POST   | Create a new order                 |
-
-## Deployment
-
-This project is configured for deployment on Vercel with a PostgreSQL database hosted on Railway or Supabase.
-
-```bash
-# Build the project
-npm run build
-# or
-yarn build
-
-# Deploy to Vercel
-vercel --prod
+```
+tamshopex/
+├── app/                    # Next.js App Router pages
+│   ├── cart/              # Shopping cart
+│   ├── products/          # Product listing & details
+│   ├── signin/            # Authentication
+│   └── signup/            # User registration
+├── components/            # Reusable React components
+├── lib/                   # Utilities and configurations
+├── pages/api/             # API endpoints
+├── prisma/                # Database schema
+└── public/                # Static assets
 ```
 
-## Future Enhancements
+## 🔗 API Endpoints
 
-- User authentication and account management
-- Payment gateway integration
-- Admin dashboard for product management
-- Order tracking and history
-- Discount and promotion system
-- User reviews and ratings
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/products` | GET | Retrieve products with filtering |
+| `/api/products/[id]` | GET | Get product details |
+| `/api/cart` | GET/POST/PUT/DELETE | Cart management |
+| `/api/auth/register` | POST | User registration |
+| `/api/auth/login` | POST | User authentication |
+| `/api/order` | GET/POST | Order management |
 
-## License
+## 👥 Target Audience
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+- **Primary**: Tourists seeking authentic cultural souvenirs
+- **Secondary**: Local residents interested in cultural products  
+- **Tertiary**: International customers interested in North African culture
 
-## Contact
+## 🔮 Future Enhancements
 
-For questions or support, please contact [akio216216@gmail.com](mailto:akio216216@gmail.com).
+- Mobile application development
+- Advanced recommendation systems
+- Integration with local payment systems
+- Enhanced cultural storytelling features
+- Community forums and artisan profiles
+
+## 👨‍💻 Development Team
+
+- **Mabrouki Ala Eddine**
+- **Hafidi Mohamed Abdelazim**
+
+## 📚 Documentation
+
+For detailed technical documentation, system architecture, and implementation details, refer to the complete project documentation.
+
+## 📄 License
+
+Bachelor's Degree Final Year Project - University of Amine Elokkal El Hadj Moussa Eg Akhamouk
+
+---
+
+*Empowering local artisans through digital innovation* 🏺✨

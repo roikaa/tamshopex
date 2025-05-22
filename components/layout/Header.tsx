@@ -42,25 +42,7 @@ export default function Header() {
             <Link href="/products" className="text-gray-700 hover:text-blue-600">
               All Products
             </Link>
-            <div className="relative group">
-              <button className="text-gray-700 hover:text-blue-600 group-hover:text-blue-600">
-                Categories
-              </button>
-              <div className="absolute z-10 left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="py-1">
-                  {categories.map((category) => (
-                    <Link
-                      key={category.name}
-                      href={category.href}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <Link href="/about" className="text-gray-700 hover:text-blue-600">
+                        <Link href="/about" className="text-gray-700 hover:text-blue-600">
               About
             </Link>
             <Link href="/contact" className="text-gray-700 hover:text-blue-600">
@@ -71,32 +53,10 @@ export default function Header() {
           {/* Actions */}
           <div className="flex items-center space-x-4">
             {/* Search */}
-            <div className="relative hidden md:block">
-              {isSearchOpen ? (
-                <div className="absolute right-0 top-0 w-64 flex items-center">
-                  <input
-                    type="text"
-                    placeholder="Search products..."
-                    className="w-full border border-gray-300 rounded-md py-1 px-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    autoFocus
-                    onBlur={() => setIsSearchOpen(false)}
-                  />
-                  <button
-                    className="ml-2"
-                    onClick={() => setIsSearchOpen(false)}
-                  >
-                    <X size={20} className="text-gray-500" />
-                  </button>
-                </div>
-              ) : (
-                <button
-                  className="text-gray-500 hover:text-blue-600"
-                  onClick={() => setIsSearchOpen(true)}
-                >
-                  <Search size={20} />
-                </button>
-              )}
-            </div>
+             <Link href="/search" className="text-gray-500 hover:text-blue-600">
+              <Search size={20} />
+            </Link>
+           
 
             {/* User */}
             <Link href="/signin" className="text-gray-500 hover:text-blue-600">

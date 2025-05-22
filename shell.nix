@@ -1,12 +1,16 @@
 { pkgs ? import <nixpkgs> {} }:
 pkgs.mkShell {
   buildInputs = [
-    pkgs.prisma-engines
-    pkgs.prisma
-    pkgs.mermaid-cli
+    pkgs.prisma-engines # orm
+    pkgs.prisma         # orm
+    pkgs.mermaid-cli    # tool to output mermaid files to pdf,png,svg
     pkgs.nmh
-    pkgs.tree
-    pkgs.zsh
+    pkgs.tree           # tool to print tree
+    pkgs.zsh            # Shell
+    pkgs.tikzit         # Graphical tool for rapidly creating graphs and diagrams using PGF/TikZ
+    pkgs.texliveFull    # latex
+    pkgs.texlive.combined.scheme-full
+
 
   ];
 

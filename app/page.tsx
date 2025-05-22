@@ -12,12 +12,10 @@ export default function Home() {
         <section className="mb-16">
          <FeaturedProducts limit={6} />
         </section>
-        
         <section className="mb-16">
          < CategoriesSection/> 
         </section>
-        
-        <section className="bg-gray-50 p-8 rounded-lg">
+        {/*}<section className="bg-gray-50 p-8 rounded-lg">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Join Our Newsletter</h2>
             <p className="text-gray-600 mb-6">Stay updated with the latest products and offers</p>
@@ -35,6 +33,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        */}
       </div>
     </div>
   );

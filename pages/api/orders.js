@@ -24,9 +24,9 @@ export default async function handler(req, res) {
     // In a real app, you'd get the user ID from authentication middleware
     const userId = req.body.userId || req.query.userId;
 
-    if (!userId) {
-      return res.status(401).json({ error: "User authentication required" });
-    }
+    //if (!userId) {
+    //  return res.status(401).json({ error: "User authentication required" });
+    //}
 
     switch (method) {
       case 'GET':
