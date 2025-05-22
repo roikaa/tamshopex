@@ -117,14 +117,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Product Categories Preview */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-            Our Cultural Collections
-          </h2>
-         < CategoriesSection/> 
-        </div>
-
+        
         {/* Our Commitment Section */}
         <div className="bg-gray-50 rounded-xl p-8 md:p-12 mb-16">
           <div className="max-w-3xl mx-auto text-center">

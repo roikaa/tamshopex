@@ -112,7 +112,7 @@ const CategoriesSection = () => {
 
 const CategoryCard = ({ category }) => {
   return (
-    <Link href={`/category/${category.id}`} className="group block">
+    <Link href={`/search?category=${category.id}`} className="group block">
       <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 group-hover:border-gray-200">
         {/* Category Image/Icon Placeholder */}
 
