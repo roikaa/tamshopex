@@ -53,7 +53,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="aspect-w-3 aspect-h-4">
                 <img 
-                  src="/hero.jpeg" 
+                  src="/p/13.jpg" 
                   alt="Tamanrasset landscape with traditional architecture"
                   className="rounded-lg shadow-xl object-cover w-full h-96"
                 />
