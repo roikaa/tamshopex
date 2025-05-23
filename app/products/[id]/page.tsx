@@ -40,7 +40,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <div className="text-center">
         <h1 className="text-2xl font-bold text-gray-600 mb-4">Please log in to view products</h1>
         <button 
-          onClick={() => router.push('/login')}
+          onClick={() => router.push('/signin')}
           className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
         >
           Go to Login

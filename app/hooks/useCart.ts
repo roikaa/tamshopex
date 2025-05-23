@@ -23,13 +23,21 @@ interface Cart {
   total: string;
 }
 
-export function useCart(userId: string) {
+export function useCart(userId: string | undefined | null) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [cartCount, setCartCount] = useState(0);
 
   // Fetch cart data
   const fetchCart = useCallback(async () => {
+    // Don't fetch if no userId
+    if (!userId) {
+      setLoading(false);
+      setCart(null);
+      setCartCount(0);
+      return;
+    }
+
     try {
       setLoading(true);
       
@@ -48,6 +56,10 @@ export function useCart(userId: string) {
 
   // Add item to cart
   const addToCart = useCallback(async (productId: string, quantity: number = 1) => {
+    if (!userId) {
+      throw new Error('User must be logged in to add items to cart');
+    }
+
     try {
       console.log('Adding to cart:', { productId, quantity, userId });
 
@@ -84,6 +96,10 @@ export function useCart(userId: string) {
 
   // Update item quantity
   const updateQuantity = useCallback(async (cartItemId: string, quantity: number) => {
+    if (!userId) {
+      throw new Error('User must be logged in to update cart');
+    }
+
     try {
       const response = await fetch('/api/cart', {
         method: 'PUT',
@@ -107,10 +123,14 @@ export function useCart(userId: string) {
       console.error('Error updating quantity:', error);
       throw error;
     }
-  }, [fetchCart]);
+  }, [fetchCart, userId]);
 
   // Remove item from cart
   const removeItem = useCallback(async (cartItemId: string) => {
+    if (!userId) {
+      throw new Error('User must be logged in to remove items');
+    }
+
     try {
       const response = await fetch(`/api/cart?cartItemId=${cartItemId}`, {
         method: 'DELETE',
@@ -126,10 +146,14 @@ export function useCart(userId: string) {
       console.error('Error removing item:', error);
       throw error;
     }
-  }, [fetchCart]);
+  }, [fetchCart, userId]);
 
   // Clear cart
   const clearCart = useCallback(async () => {
+    if (!userId) {
+      throw new Error('User must be logged in to clear cart');
+    }
+
     try {
       const response = await fetch(`/api/cart/clear?userId=${userId}`, {
         method: 'DELETE',
