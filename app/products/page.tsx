@@ -10,9 +10,7 @@ export default function ProductsPage() {
       <h1 className="text-3xl font-bold text-gray-900 mb-6">All Products</h1>
       
       <div className="flex flex-col md:flex-row gap-8">
-        <div className="w-full md:w-64">
-          <ProductFilters />
-        </div>
+       
         <div className="flex-grow">
           <ProductGrid />
         </div>
