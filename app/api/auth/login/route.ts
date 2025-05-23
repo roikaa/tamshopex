@@ -49,7 +49,10 @@ export async function POST(request: NextRequest) {
         createdAt: user.createdAt
       },
       token
-    })
+    },
+          { status: 200}
+
+                            )
 
   } catch (error) {
     console.error('Login error:', error)

@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, LogIn } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext'; // Adjust path as needed
 
 interface Product {
   id: string;
@@ -32,20 +33,18 @@ export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
-
-  // For demo purposes, using sessionId. In real app, you'd get userId from auth
-  const sessionId = typeof window !== 'undefined' ? 
-    localStorage.getItem('sessionId') || 
-    (() => {
-      const id = Math.random().toString(36).substring(7);
-      localStorage.setItem('sessionId', id);
-      return id;
-    })() : null;
+  const { user, isAuthenticated, loading: authLoading } = useAuth();
 
   const fetchCart = async () => {
+    if (!user?.id) return;
+    
     try {
       setLoading(true);
-      const response = await fetch(`/api/cart?sessionId=${sessionId}`);
+      const response = await fetch(`/api/cart?userId=${user.id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart);
@@ -64,6 +63,7 @@ export default function CartPage() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
           cartItemId,
@@ -90,6 +90,9 @@ export default function CartPage() {
       setUpdating(cartItemId);
       const response = await fetch(`/api/cart?cartItemId=${cartItemId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
       });
 
       if (response.ok) {
@@ -107,11 +110,15 @@ export default function CartPage() {
 
   const clearCart = async () => {
     if (!confirm('Are you sure you want to clear your cart?')) return;
+    if (!user?.id) return;
 
     try {
       setLoading(true);
-      const response = await fetch(`/api/cart/clear?sessionId=${sessionId}`, {
+      const response = await fetch(`/api/cart/clear?userId=${user.id}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
       });
 
       if (response.ok) {
@@ -126,11 +133,63 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    if (sessionId) {
+    if (!authLoading && isAuthenticated && user?.id) {
       fetchCart();
+    } else if (!authLoading && !isAuthenticated) {
+      setLoading(false);
     }
-  }, [sessionId]);
+  }, [user?.id, isAuthenticated, authLoading]);
 
+  // Show loading while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow p-8">
+            <div className="animate-pulse">
+              <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <div className="w-20 h-20 bg-gray-200 rounded"></div>
+                    <div className="flex-1">
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login prompt if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow p-8 text-center">
+            <LogIn className="mx-auto h-16 w-16 text-gray-400 mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Please log in to view your cart</h2>
+            <p className="text-gray-600 mb-6">You need to be logged in to access your shopping cart.</p>
+            <div className="space-x-4">
+              <Link
+                href="/signin"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+              >
+                Log In
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading while fetching cart
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -156,6 +215,7 @@ export default function CartPage() {
     );
   }
 
+  // Show empty cart
   if (!cart || cart.items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -182,7 +242,10 @@ export default function CartPage() {
         <div className="bg-white rounded-lg shadow">
           <div className="p-6 border-b border-gray-200">
             <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Shopping Cart</h1>
+                <p className="text-sm text-gray-600 mt-1">Welcome back, {user.name || user.email}</p>
+              </div>
               <button
                 onClick={clearCart}
                 className="text-red-600 hover:text-red-800 text-sm font-medium"
@@ -190,7 +253,7 @@ export default function CartPage() {
                 Clear Cart
               </button>
             </div>
-            <p className="text-gray-600 mt-1">{cart.items.length} {cart.items.length === 1 ? 'item' : 'items'}</p>
+            <p className="text-gray-600 mt-2">{cart.items.length} {cart.items.length === 1 ? 'item' : 'items'}</p>
           </div>
 
           <div className="p-6">

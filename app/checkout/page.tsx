@@ -1,10 +1,12 @@
 // checkout/page.tsx
+// checkout/page.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ShoppingBag, CreditCard, Truck, User, Mail, MapPin, Lock, ArrowLeft } from 'lucide-react';
+import { ShoppingBag, CreditCard, Truck, User, Mail, MapPin, Lock, ArrowLeft, AlertCircle } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext'; // Update this path
 
 interface Product {
   id: string;
@@ -42,11 +44,13 @@ interface CheckoutForm {
 }
 
 export default function CheckoutPage() {
+  const { user, isAuthenticated, loading: authLoading, token } = useAuth();
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<string>('');
 
   const [form, setForm] = useState<CheckoutForm>({
     customerName: '',
@@ -62,25 +66,51 @@ export default function CheckoutPage() {
 
   const [errors, setErrors] = useState<Partial<CheckoutForm>>({});
 
-  // For demo purposes, using sessionId. In real app, you'd get userId from auth
-  const sessionId = typeof window !== 'undefined' ? 
-    localStorage.getItem('sessionId') || 
-    (() => {
-      const id = Math.random().toString(36).substring(7);
-      localStorage.setItem('sessionId', id);
-      return id;
-    })() : null;
+  // Pre-fill form with user data when available
+  useEffect(() => {
+    if (user) {
+      setForm(prev => ({
+        ...prev,
+        customerName: user.name || prev.customerName,
+        customerEmail: user.email || prev.customerEmail,
+      }));
+    }
+  }, [user]);
 
   const fetchCart = async () => {
+    if (!user?.id) {
+      setAuthError('Please log in to view your cart');
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
-      const response = await fetch(`/api/cart?sessionId=${sessionId}`);
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      // Add authorization header if token is available
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`/api/cart?userId=${user.id}`, {
+        headers
+      });
+
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart);
+      } else if (response.status === 401) {
+        setAuthError('Your session has expired. Please log in again.');
+      } else {
+        const errorData = await response.json();
+        setAuthError(errorData.error || 'Failed to fetch cart');
       }
     } catch (error) {
       console.error('Error fetching cart:', error);
+      setAuthError('Failed to fetch cart. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -128,7 +158,7 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm() || !cart) return;
+    if (!validateForm() || !cart || !user?.id) return;
 
     setSubmitting(true);
 
@@ -145,17 +175,23 @@ export default function CheckoutPage() {
           quantity: item.quantity,
           price: parseFloat(item.product.price)
         })),
-        sessionId,
+        userId: user.id, // Use userId instead of sessionId
         paymentMethod: form.paymentMethod,
         phone: form.phone,
         notes: form.notes
       };
 
+      const headers: HeadersInit = {
+        'Content-Type': 'application/json',
+      };
+
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch('/api/orders', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(orderData)
       });
 
@@ -165,9 +201,12 @@ export default function CheckoutPage() {
         setOrderPlaced(true);
         
         // Clear cart after successful order
-        await fetch(`/api/cart/clear?sessionId=${sessionId}`, {
+        await fetch(`/api/cart/clear?userId=${user.id}`, {
           method: 'DELETE',
+          headers
         });
+      } else if (response.status === 401) {
+        setAuthError('Your session has expired. Please log in again.');
       } else {
         const error = await response.json();
         alert(error.error || 'Failed to place order');
@@ -181,10 +220,75 @@ export default function CheckoutPage() {
   };
 
   useEffect(() => {
-    if (sessionId) {
-      fetchCart();
+    if (!authLoading) {
+      if (isAuthenticated && user?.id) {
+        fetchCart();
+      } else {
+        setAuthError('Please log in to access checkout');
+        setLoading(false);
+      }
     }
-  }, [sessionId]);
+  }, [authLoading, isAuthenticated, user?.id]);
+
+  // Show loading while auth is initializing
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="space-y-4">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-4 bg-gray-200 rounded"></div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-white rounded-lg shadow p-6">
+                <div className="space-y-4">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="h-16 bg-gray-200 rounded"></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show auth error if user is not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-8">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-lg shadow p-8 text-center">
+            <AlertCircle className="mx-auto h-16 w-16 text-red-400 mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Authentication Required</h2>
+            <p className="text-gray-600 mb-6">
+              {authError || 'You need to be logged in to access the checkout page.'}
+            </p>
+            <div className="space-x-4">
+              <Link
+                href="/login"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/products"
+                className="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors"
+              >
+                Continue Shopping
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -282,6 +386,7 @@ export default function CheckoutPage() {
             Back to Cart
           </Link>
           <h1 className="text-3xl font-bold text-gray-900 mt-4">Checkout</h1>
+          <p className="text-gray-600 mt-2">Logged in as: {user?.email}</p>
         </div>
 
         <form onSubmit={handleSubmit}>

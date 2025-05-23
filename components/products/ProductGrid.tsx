@@ -152,10 +152,12 @@ export default function ProductGrid({
     setRetryCount(prev => prev + 1);
   };
 
-  // Format price in DA
-  const formatPrice = (price: number): string => {
-    const formattedNumber = new Intl.NumberFormat('en-US').format(price);
-    return `${formattedNumber} DA`;
+  // Format price in DZD
+   const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'DZD'
+    }).format(price);
   };
 
   // Display loading state

@@ -572,6 +572,7 @@ const Dashboard = () => {
                   Settings
                 </button>
                 {displayUser?.role === 'ADMIN' && (
+                  
                   <button className="w-full text-left p-2 bg-yellow-100 border border-yellow-300 rounded hover:bg-yellow-200 transition-colors">
                     Admin Panel
                   </button>

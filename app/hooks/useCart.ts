@@ -23,32 +23,17 @@ interface Cart {
   total: string;
 }
 
-export function useCart() {
+export function useCart(userId: string) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [cartCount, setCartCount] = useState(0);
-
-  // Get or create session ID for guest users
-  const getSessionId = useCallback(() => {
-    if (typeof window === 'undefined') return null;
-    
-    let sessionId = localStorage.getItem('sessionId');
-    if (!sessionId) {
-      sessionId = `guest_${Date.now()}_${Math.random().toString(36).substring(7)}`;
-      localStorage.setItem('sessionId', sessionId);
-      console.log('Created new session ID:', sessionId);
-    }
-    return sessionId;
-  }, []);
 
   // Fetch cart data
   const fetchCart = useCallback(async () => {
     try {
       setLoading(true);
-      const sessionId = getSessionId();
-      if (!sessionId) return;
-
-      const response = await fetch(`/api/cart?sessionId=${sessionId}`);
+      
+      const response = await fetch(`/api/cart?userId=${userId}`);
       if (response.ok) {
         const data = await response.json();
         setCart(data.cart);
@@ -59,15 +44,12 @@ export function useCart() {
     } finally {
       setLoading(false);
     }
-  }, [getSessionId]);
+  }, [userId]);
 
   // Add item to cart
   const addToCart = useCallback(async (productId: string, quantity: number = 1) => {
     try {
-      const sessionId = getSessionId();
-      if (!sessionId) throw new Error('No session ID found');
-
-      console.log('Adding to cart:', { productId, quantity, sessionId });
+      console.log('Adding to cart:', { productId, quantity, userId });
 
       const response = await fetch('/api/cart', {
         method: 'POST',
@@ -77,7 +59,7 @@ export function useCart() {
         body: JSON.stringify({
           productId,
           quantity,
-          sessionId,
+          userId,
         }),
       });
 
@@ -98,7 +80,7 @@ export function useCart() {
       }
       throw error;
     }
-  }, [getSessionId, fetchCart]);
+  }, [userId, fetchCart]);
 
   // Update item quantity
   const updateQuantity = useCallback(async (cartItemId: string, quantity: number) => {
@@ -149,10 +131,7 @@ export function useCart() {
   // Clear cart
   const clearCart = useCallback(async () => {
     try {
-      const sessionId = getSessionId();
-      if (!sessionId) throw new Error('No session ID');
-
-      const response = await fetch(`/api/cart/clear?sessionId=${sessionId}`, {
+      const response = await fetch(`/api/cart/clear?userId=${userId}`, {
         method: 'DELETE',
       });
 
@@ -166,7 +145,7 @@ export function useCart() {
       console.error('Error clearing cart:', error);
       throw error;
     }
-  }, [getSessionId, fetchCart]);
+  }, [userId, fetchCart]);
 
   // Get cart item by product ID
   const getCartItem = useCallback((productId: string) => {

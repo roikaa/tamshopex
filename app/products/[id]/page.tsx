@@ -3,6 +3,7 @@ import { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShoppingCart, Plus, Minus, Check } from 'lucide-react';
 import { useCart } from '../../hooks/useCart';
+import { useAuth} from '../../../contexts/AuthContext'
 
 interface Product {
   id: string | number;
@@ -15,6 +16,7 @@ interface Product {
 }
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  
   // Unwrap the params promise using React.use()
   const resolvedParams = use(params);
   
@@ -27,10 +29,27 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   
   const router = useRouter();
   // Replace this with your actual auth state
-  // const { user } = useAuth(); // Or however you get the user
-  const user = null; // Set this to your actual user object when logged in
+   const { user } = useAuth(); // Or however you get the user
+// const user = null; // Set this to your actual user object when logged in
   
-  const { addToCart, getCartItem, cartCount } = useCart(user?.id);
+ if (!user) {
+  // Handle unauthenticated user case
+  // You might want to redirect to login or show a message
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="text-center">
+        <h1 className="text-2xl font-bold text-gray-600 mb-4">Please log in to view products</h1>
+        <button 
+          onClick={() => router.push('/login')}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+        >
+          Go to Login
+        </button>
+      </div>
+    </div>
+  );
+}
+  const { addToCart, getCartItem, cartCount } = useCart(user.id);
 
   useEffect(() => {
     const fetchProduct = async () => {

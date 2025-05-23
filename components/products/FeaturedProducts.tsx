@@ -168,10 +168,11 @@ const FeaturedProducts = ({ limit = 6 }: FeaturedProductsProps) => {
 };
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const formatPrice = (price: number): string => {
-    // Format the number with commas and add DA suffix
-    const formattedNumber = new Intl.NumberFormat('en-US').format(price);
-    return `${formattedNumber} DA`;
+   const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'DZD'
+    }).format(price);
   };
 
   return (

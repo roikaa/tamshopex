@@ -147,9 +147,9 @@ export default function SearchPage() {
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('fr-DZ', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'DZD'
     }).format(price);
   };
 

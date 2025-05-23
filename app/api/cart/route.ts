@@ -8,9 +8,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
-    const sessionId = searchParams.get('sessionId');
 
-    if (!userId && !sessionId) {
+    if (!userId) {
       return NextResponse.json({ error: 'User ID or Session ID required' }, { status: 400 });
     }
 
